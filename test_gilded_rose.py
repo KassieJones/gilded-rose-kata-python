@@ -36,14 +36,14 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("Aged Brie", -1, 49)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(50, items[0].quality)
 
     def test_AB_under0_over50(self):
         items = [Item("Aged Brie", -1, 51)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(51, items[0].quality)
 
     def test_BP_under11_under50(self):
@@ -78,14 +78,14 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("Backstage passes to a TAFKAL80ETC concert", -1, 51)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(0, items[0].quality)
 
     def test_BP_under0_under50(self):
         items = [Item("Backstage passes to a TAFKAL80ETC concert", -1, 49)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(0, items[0].quality)
 
     def test_SUL_under11_under50(self):
@@ -120,14 +120,14 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("Sulfuras, Hand of Ragnaros", -1, 51)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-1, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(51, items[0].quality)
 
     def test_SUL_under0_under50(self):
         items = [Item("Sulfuras, Hand of Ragnaros", -1, 49)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-1, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(49, items[0].quality)
 
 
@@ -163,14 +163,14 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("ANY", -1, 51)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(49, items[0].quality)
 
     def test_ANY_under0_under50(self):
         items = [Item("ANY", -1, 49)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(47, items[0].quality)
 
 
@@ -178,43 +178,9 @@ class GildedRoseTest(unittest.TestCase):
         items = [Item("Conjured Mana Cake", 5, 49)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
-        self.assertEqual(5, items[0].sell_in)
-        self.assertEqual(49, items[0].quality)
+        self.assertEqual(4, items[0].sell_in)
+        self.assertEqual(47, items[0].quality)
 
-    def test_CON_under11_over50(self):
-        items = [Item("Conjured Mana Cake", 5, 51)]
-        gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
-        self.assertEqual(5, items[0].sell_in)
-        self.assertEqual(51, items[0].quality)
-
-    def test_CON_over11_under50(self):
-        items = [Item("Conjured Mana Cake", 12, 49)]
-        gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
-        self.assertEqual(12, items[0].sell_in)
-        self.assertEqual(49, items[0].quality)
-
-    def test_CON_over11_over50(self):
-        items = [Item("Conjured Mana Cake", 12, 51)]
-        gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
-        self.assertEqual(12, items[0].sell_in)
-        self.assertEqual(51, items[0].quality)
-
-    def test_CON_under0_over50(self):
-        items = [Item("Conjured Mana Cake", -1, 51)]
-        gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
-        self.assertEqual(-1, items[0].sell_in)
-        self.assertEqual(51, items[0].quality)
-
-    def test_CON_under0_under50(self):
-        items = [Item("Conjured Mana Cake", -1, 49)]
-        gilded_rose = GildedRose(items)
-        gilded_rose.update_quality()
-        self.assertEqual(-1, items[0].sell_in)
-        self.assertEqual(49, items[0].quality)
 
 if __name__ == '__main__':
     unittest.main()

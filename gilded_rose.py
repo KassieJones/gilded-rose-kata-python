@@ -16,12 +16,19 @@ class Default(object):
         if self.item.quality < 50:
             self.item.quality = self.item.quality + 1
 
+    def quality_zeroed(self):
+        self.item.quality = 0
+
+    def sell_in_zeroed(self):
+        self.item.sell_in = 0
+
     def update_quality(self):
         self.lower_quality()
         self.lower_sell_in()
 
         if self.item.sell_in < 0:
             self.lower_quality()
+            self.sell_in_zeroed()
 
 
 class AgedBrie(Default):
@@ -30,12 +37,10 @@ class AgedBrie(Default):
         self.add_quality()
         self.lower_sell_in()
         if self.item.sell_in < 0:
-            self.add_quality()
+            self.sell_in_zeroed()
 
 
 class Backstage(Default):
-    def quality_zeroed(self):
-        self.item.quality = 0
 
     def update_quality(self):
         self.add_quality()
@@ -46,18 +51,25 @@ class Backstage(Default):
         self.lower_sell_in()
         if self.item.sell_in < 0:
             self.quality_zeroed()
+            self.sell_in_zeroed()
 
 
 class Sulfuras(Default):
 
     def update_quality(self):
+        if self.item.sell_in < 0:
+            self.sell_in_zeroed()
         pass
 
 
 class Conjured(Default):
-    def decrease_quality(self):
-        Default.decrease_quality(self)
-        Default.decrease_quality(self)
+    def update_quality(self):
+        self.lower_quality()
+        self.lower_quality()
+        self.lower_sell_in()
+        if self.item.sell_in < 0:
+            self.sell_in_zeroed()
+
 
 class GildedRose(object):
     def __init__(self, items):
@@ -75,7 +87,7 @@ class GildedRose(object):
                 updater = Sulfuras(item)
                 updater.update_quality()
             elif item.name == "Conjured Mana Cake":
-                updater = Sulfuras(item)
+                updater = Conjured(item)
                 updater.update_quality()
             else:
                 updater = Default(item)
