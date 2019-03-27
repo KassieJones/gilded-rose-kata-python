@@ -70,28 +70,30 @@ class Conjured(Default):
         if self.item.sell_in < 0:
             self.sell_in_zeroed()
 
+class ItemUpdater(object):
+
+    registry = {
+        "Aged Brie": AgedBrie,
+        "Backstage passes to a TAFKAL80ETC concert": Backstage,
+        "Sulfuras, Hand of Ragnaros": Sulfuras,
+        "Conjured Mana Cake": Conjured,
+    }
+
+    @classmethod
+    def make_registry_updater(cls, item):
+        if item.name in cls.registry:
+            return cls.registry[item.name](item)
+        return Default(item)
 
 class GildedRose(object):
     def __init__(self, items):
         self.items = items
 
+
     def update_quality(self):
         for item in self.items:
-            if item.name == "Aged Brie":
-                updater = AgedBrie(item)
-                updater.update_quality()
-            elif item.name == "Backstage passes to a TAFKAL80ETC concert":
-                updater = Backstage(item)
-                updater.update_quality()
-            elif item.name == "Sulfuras, Hand of Ragnaros":
-                updater = Sulfuras(item)
-                updater.update_quality()
-            elif item.name == "Conjured Mana Cake":
-                updater = Conjured(item)
-                updater.update_quality()
-            else:
-                updater = Default(item)
-                updater.update_quality()
+            updater = ItemUpdater.make_registry_updater(item)
+            updater.update_quality()
 
 
 
